@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>방명록</title>
+    <style>
+        /* 방명록 제목의 색상을 분홍색으로 지정 */
+        h1 {
+            color: pink;
+        }
+
+        /* 메시지 입력창의 크기를 조절 */
+        #message {
+            width: 300px;
+            height: 100px;
+            background-color: ivory; /* 아이보리색 배경 */
+        }
+
+        /* 이름 입력창의 크기를 조절 */
+        #name {
+            width: 200px;
+            background-color: ivory; /* 아이보리색 배경 */
+        }
+
+        /* 게시된 방명록 글의 스타일 지정 */
+        .guestbook-entry {
+            background-color: #ff69b4; /* 진한 핑크 색상 */
+            color: white;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+
+        /* 게시된 방명록 글의 시간 스타일 지정 */
+        .guestbook-time {
+            font-size: smaller;
+            color: lightgrey;
+        }
+    </style>
+</head>
+<body>
+    <h1>방명록</h1>
+
+    <div id="guestbook-entries">
+        <!-- 방명록 항목이 여기에 표시됩니다. -->
+    </div>
+
+    <form id="guestbook-form">
+        <label for="name">이름:</label><br>
+        <input type="text" id="name" name="name"><br>
+        <label for="message">메시지:</label><br>
+        <textarea id="message" name="message"></textarea><br>
+        <input type="submit" value="제출">
+    </form>
+
+    <script>
+        // 폼 제출 시 방명록 항목 추가
+        document.getElementById("guestbook-form").addEventListener("submit", function(event) {
+            event.preventDefault(); // 기본 제출 동작 방지
+
+            // 입력된 이름과 메시지 가져오기
+            var name = document.getElementById("name").value;
+            var message = document.getElementById("message").value;
+
+            // 현재 시간 가져오기
+            var now = new Date();
+            var time = now.toLocaleString();
+
+            // 새로운 방명록 항목 생성
+            var entry = document.createElement("div");
+            entry.classList.add("guestbook-entry"); // CSS 클래스 추가
+            entry.innerHTML = "<strong>" + name + ":</strong> " + message + "<br>" +
+                              "<span class='guestbook-time'>" + time + "</span>";
+
+            // 방명록 목록에 추가
+            var guestbook = document.getElementById("guestbook-entries");
+            guestbook.insertBefore(entry, guestbook.firstChild); // 입력 폼 위에 추가
+
+            // 입력 필드 초기화
+            document.getElementById("name").value = "";
+            document.getElementById("message").value = "";
+        });
+    </script>
+</body>
+</html>
